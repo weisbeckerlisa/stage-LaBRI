@@ -2,14 +2,12 @@
 % Initialisation
 clear; close all; clc;
 
-% Changer ces chemins selon votre configuration
 imagesFolder = 'data/cocoval';
 labelsFolder = 'data/cocoval_mat';
 gtFolder = 'data/cocoval_gt';
 spFolder = 'data/cocoval_500k';
 outputFolder = 'data/new_seg';
 
-% Obtenir les noms de tous les fichiers d'image
 imageFiles = dir(fullfile(imagesFolder, '*.jpg'));
 labelFiles = dir(fullfile(labelsFolder, '*.mat'));
 spFiles = dir(fullfile(spFolder, '*.mat'));
@@ -19,7 +17,6 @@ img_idx = 22;
 
 [~, name, ~] = fileparts(imageFiles(img_idx).name);
 
-% Obtenir le nom d'une image et son label
 imageFile = fullfile(imagesFolder, [name, '.jpg']);
 labelFile = fullfile(labelsFolder, name);
 gtFile = fullfile(gtFolder, [name, '.png']);
@@ -30,12 +27,9 @@ labelData = load(labelFile);
 labelImg = labelData.label +1;
 gtImg = imread(gtFile);
 
-% Exécuter la segmentation par superpixels pour différentes quantités de superpixels
 SP_numbers = [25, 50, 100, 150, 325, 600]; % nombre de superpixels
 for k = 1:numel(SP_numbers)
     SP = load(fullfile(spFolder, [name, '_', num2str(SP_numbers(k)), '_label.mat'])).label;
-
-    % Créer une nouvelle image de segmentation
     newSegmentation = zeros(size(labelImg));
 
     % Attribuer les labels de classe
