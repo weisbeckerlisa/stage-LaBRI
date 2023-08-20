@@ -13,7 +13,6 @@ for file in os.listdir(npy_dir):
         npy_file = os.path.join(npy_dir, file)
         label = np.load(npy_file)
 
-        # Prepare a dictionary to save as .mat file
         mat_dict = {}
         mat_dict['label'] = label
 
